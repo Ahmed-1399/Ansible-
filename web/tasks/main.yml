@@ -1,0 +1,40 @@
+#  tasks:
+# Description
+- name: Update cache first before Any thing
+  # Module
+  apt:
+    # Arguments
+    update_cache: yes
+
+- name: install apache "httpd"
+  apt:
+    # Arguments
+        # Package
+    name: nginx
+    # Install لو موجود مش هيعمل حاجة ولو مش موجود هيعمل 
+    state: present
+
+- name: Create Directory
+  file:
+    # Variable
+    path: "{{dir_name}}"
+    state: directory
+
+# Copy from Local to Remote-Server  
+- name: Copy Template
+  template:
+    src: myconfig
+    dest: myconfig
+  # !!!!!!!!!!!
+  # Restart لو حصل أي تغيير هيعمل 
+  notify: restart nginx
+
+- name: Loop users
+  user:
+    name: "{{item}}"
+    state: present
+  with_items:
+  - ahmed
+  - medo
+  - ali
+  - omda

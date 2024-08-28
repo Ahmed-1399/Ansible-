@@ -1,0 +1,14 @@
+---
+- hosts: web
+  remote_user: ubuntu
+  # Give you "sudo"
+  become: true
+
+  # Password Variable
+  vars_prompt:
+  - name: password
+    prompt: Enter your Password?
+    # Password not Appear in Terminal
+    private: yes
+  roles:
+  - web
